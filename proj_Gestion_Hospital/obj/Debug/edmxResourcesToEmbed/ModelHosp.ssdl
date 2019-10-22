@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Proj_Integrateur_Bourassa_MEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Compagnie_Assurance">
+    <Key>
+      <PropertyRef Name="ID_Compagnie" />
+    </Key>
+    <Property Name="ID_Compagnie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom_compagnie" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Departement">
+    <Key>
+      <PropertyRef Name="ID_Departement" />
+    </Key>
+    <Property Name="ID_Departement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Dossier_Admission">
+    <Key>
+      <PropertyRef Name="ID_Admission" />
+    </Key>
+    <Property Name="ID_Admission" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Chirurgie_prog" Type="varchar" MaxLength="50" />
+    <Property Name="date_admission" Type="date" />
+    <Property Name="date_chirurgie" Type="date" />
+    <Property Name="date_conge" Type="date" />
+    <Property Name="nss" Type="varchar" MaxLength="50" />
+    <Property Name="numero_lits" Type="int" />
+    <Property Name="ID_Medecin" Type="int" />
+  </EntityType>
+  <EntityType Name="Lit">
+    <Key>
+      <PropertyRef Name="Numero_Lit" />
+    </Key>
+    <Property Name="Numero_Lit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="occupe" Type="bit" />
+    <Property Name="numero_type" Type="int" />
+    <Property Name="ID_Department" Type="int" />
+  </EntityType>
+  <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'Proj_Integrateur_Bourassa_ME.dbo.Login_Info' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+  <EntityType Name="Login_Info">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="login" />
+      <PropertyRef Name="password" />
+      <PropertyRef Name="doctor" />
+      <PropertyRef Name="orderly" />
+      <PropertyRef Name="admin" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="doctor" Type="bit" Nullable="false" />
+    <Property Name="orderly" Type="bit" Nullable="false" />
+    <Property Name="admin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medecin">
+    <Key>
+      <PropertyRef Name="ID_medecin" />
+    </Key>
+    <Property Name="ID_medecin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nom" Type="varchar" MaxLength="50" />
+    <Property Name="prenom" Type="varchar" MaxLength="50" />
+    <Property Name="specialite" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Parent">
+    <Key>
+      <PropertyRef Name="ref_parent" />
+    </Key>
+    <Property Name="ref_parent" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="nom" Type="varchar" MaxLength="50" />
+    <Property Name="prenom" Type="varchar" MaxLength="50" />
+    <Property Name="adresse" Type="varchar" MaxLength="50" />
+    <Property Name="ville" Type="varchar" MaxLength="50" />
+    <Property Name="province" Type="varchar" MaxLength="50" />
+    <Property Name="code_postale" Type="varchar" MaxLength="50" />
+    <Property Name="telephone" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="NSS" />
+    </Key>
+    <Property Name="NSS" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="nom" Type="varchar" MaxLength="50" />
+    <Property Name="prenom" Type="varchar" MaxLength="50" />
+    <Property Name="adresse" Type="varchar" MaxLength="50" />
+    <Property Name="ville" Type="varchar" MaxLength="50" />
+    <Property Name="province" Type="varchar" MaxLength="50" />
+    <Property Name="code_postale" Type="varchar" MaxLength="50" />
+    <Property Name="telephone" Type="varchar" MaxLength="50" />
+    <Property Name="id_compagnie" Type="int" />
+    <Property Name="ref_patient" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Type_Lit">
+    <Key>
+      <PropertyRef Name="Numero_Type" />
+    </Key>
+    <Property Name="Numero_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descrip" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Dossier_Admission_Lit">
+    <End Role="Lit" Type="Self.Lit" Multiplicity="0..1" />
+    <End Role="Dossier_Admission" Type="Self.Dossier_Admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lit">
+        <PropertyRef Name="Numero_Lit" />
+      </Principal>
+      <Dependent Role="Dossier_Admission">
+        <PropertyRef Name="numero_lits" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dossier_Admission_Medecin">
+    <End Role="Medecin" Type="Self.Medecin" Multiplicity="0..1" />
+    <End Role="Dossier_Admission" Type="Self.Dossier_Admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medecin">
+        <PropertyRef Name="ID_medecin" />
+      </Principal>
+      <Dependent Role="Dossier_Admission">
+        <PropertyRef Name="ID_Medecin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dossier_Admission_Patient">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Dossier_Admission" Type="Self.Dossier_Admission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="NSS" />
+      </Principal>
+      <Dependent Role="Dossier_Admission">
+        <PropertyRef Name="nss" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lit_Departement">
+    <End Role="Departement" Type="Self.Departement" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departement">
+        <PropertyRef Name="ID_Departement" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="ID_Department" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lit_Type_Lit">
+    <End Role="Type_Lit" Type="Self.Type_Lit" Multiplicity="0..1" />
+    <End Role="Lit" Type="Self.Lit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type_Lit">
+        <PropertyRef Name="Numero_Type" />
+      </Principal>
+      <Dependent Role="Lit">
+        <PropertyRef Name="numero_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_Compagnie_Assurance">
+    <End Role="Compagnie_Assurance" Type="Self.Compagnie_Assurance" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compagnie_Assurance">
+        <PropertyRef Name="ID_Compagnie" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="id_compagnie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Patient_Parent">
+    <End Role="Parent" Type="Self.Parent" Multiplicity="0..1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parent">
+        <PropertyRef Name="ref_parent" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="ref_patient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="Proj_Integrateur_Bourassa_MEModelStoreContainer">
+    <EntitySet Name="Compagnie_Assurance" EntityType="Self.Compagnie_Assurance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departement" EntityType="Self.Departement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier_Admission" EntityType="Self.Dossier_Admission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lit" EntityType="Self.Lit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medecin" EntityType="Self.Medecin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parent" EntityType="Self.Parent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type_Lit" EntityType="Self.Type_Lit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Login_Info" EntityType="Self.Login_Info" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Login_Info].[ID] AS [ID], 
+    [Login_Info].[login] AS [login], 
+    [Login_Info].[password] AS [password], 
+    [Login_Info].[doctor] AS [doctor], 
+    [Login_Info].[orderly] AS [orderly], 
+    [Login_Info].[admin] AS [admin]
+    FROM [dbo].[Login_Info] AS [Login_Info]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Dossier_Admission_Lit" Association="Self.FK_Dossier_Admission_Lit">
+      <End Role="Lit" EntitySet="Lit" />
+      <End Role="Dossier_Admission" EntitySet="Dossier_Admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dossier_Admission_Medecin" Association="Self.FK_Dossier_Admission_Medecin">
+      <End Role="Medecin" EntitySet="Medecin" />
+      <End Role="Dossier_Admission" EntitySet="Dossier_Admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dossier_Admission_Patient" Association="Self.FK_Dossier_Admission_Patient">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Dossier_Admission" EntitySet="Dossier_Admission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lit_Departement" Association="Self.FK_Lit_Departement">
+      <End Role="Departement" EntitySet="Departement" />
+      <End Role="Lit" EntitySet="Lit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lit_Type_Lit" Association="Self.FK_Lit_Type_Lit">
+      <End Role="Type_Lit" EntitySet="Type_Lit" />
+      <End Role="Lit" EntitySet="Lit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_Compagnie_Assurance" Association="Self.FK_Patient_Compagnie_Assurance">
+      <End Role="Compagnie_Assurance" EntitySet="Compagnie_Assurance" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Patient_Parent" Association="Self.FK_Patient_Parent">
+      <End Role="Parent" EntitySet="Parent" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

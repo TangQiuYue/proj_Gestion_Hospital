@@ -1,0 +1,20 @@
+﻿<Window x:Class="proj_Gestion_Hospital.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:proj_Gestion_Hospital"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="550" Width="600">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="C:\Users\TQY_06\Desktop\Graphics\Course_Code\Project_Integrateur_Bourassa_ME\Project_Integrateur_Bourassa_ME\bin\Debug\Images\northern_lights.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <TextBlock Margin="181,0,109,410" FontFamily="Trebuchet MS" FontSize="20" FontWeight="Bold" TextAlignment="Center" Height="99" VerticalAlignment="Bottom" Foreground="White"><Run Text="Welcome to the"/><LineBreak/><Run Text="Northern Lights Hospital"/><LineBreak/><Run Text="Data Management Software"/></TextBlock>
+        <Label x:Name="usernameLbl" Content="User Name" HorizontalAlignment="Left" Margin="93,179,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="16" FontWeight="Bold" Foreground="White" />
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Height="28" Margin="221,271,0,0" VerticalAlignment="Top" Width="209" FontFamily="Trebuchet MS" FontSize="16" />
+        <Label x:Name="passwordLbl" Content="Password" HorizontalAlignment="Left" Margin="93,271,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="16" FontWeight="Bold" Foreground="White" />
+        <Button x:Name="logInBtn" Content="Login" HorizontalAlignment="Left" Margin="355,324,0,0" VerticalAlignment="Top" Width="75" Click="logInBtn_Click" Background="#FFD1FF00" FontFamily="Trebuchet MS" FontSize="16" FontWeight="Bold" BorderBrush="Black" BorderThickness="3"/>
+        <TextBox x:Name="loginBox" HorizontalAlignment="Left" Height="28" Margin="221,180,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="209" FontFamily="Trebuchet MS" FontSize="16" FontWeight="Bold"/>
+    </Grid>
+</Window>
